@@ -1,9 +1,21 @@
 from tkinter import *
 import datetime
 import time as tm
+import threading
+import pygame
+from uncleengineer import thaistock
 
 
+pygame.mixer.init()
+def play():
+	# playsound('sound1.mp3')
+	pygame.mixer.music.load("search.mp3")
+	pygame.mixer.music.play(loops=0)
 
+
+def playThread():
+	task = threading.Thread(target=play)
+	task.start()
 
 
 GUI = Tk()
@@ -33,6 +45,12 @@ WH = 1080
 show = StringVar()
 show.set('0100101000101010HEX')
 
+
+#---------- stock ------
+v_stockname = StringVar() #StringVar ตัวแปรสำหรับใช้กับ GUI
+v_stockname2 = StringVar() #StringVar ตัวแปรสำหรับใช้กับ GUI
+
+
 # def Fullscreen(event):
 # 	GUI.attributes('-fullscreen',True)
 
@@ -49,7 +67,11 @@ GUI.bind('<F10>', lambda event: GUI.attributes('-fullscreen', not GUI.attributes
 canvas = Canvas(GUI,width=WW,height=WH, background=bg, bd=0, relief='ridge', highlightthickness=0)
 canvas.place(x=0, y=0)
 
-def MyfFram(x,y,width=300,height=100):
+def MyfFram0(x,y,width=1410,height=865):
+	frame1 = canvas.create_rectangle(0,0,width,height,fill=bg, outline=fg2, width=2)
+	canvas.move(frame1,x,y)
+
+def MyfFram1(x,y,width=300,height=100):
 	frame1 = canvas.create_rectangle(0,0,width,height,fill=bg, outline=fg2, width=2)
 	canvas.move(frame1,x,y)
 
@@ -58,6 +80,14 @@ def MyfFram2(x,y,width=300,height=460):
 	canvas.move(frame1,x,y)
 
 def MyfFram3(x,y,width=220,height=460):
+	frame1 = canvas.create_rectangle(0,0,width,height,fill=bg, outline=fg2, width=2)
+	canvas.move(frame1,x,y)
+
+def MyfFram4(x,y,width=900,height=350):
+	frame1 = canvas.create_rectangle(0,0,width,height,fill=bg, outline=fg2, width=2)
+	canvas.move(frame1,x,y)
+
+def MyfFram5(x,y,width=450,height=845):
 	frame1 = canvas.create_rectangle(0,0,width,height,fill=bg, outline=fg2, width=2)
 	canvas.move(frame1,x,y)
 
@@ -187,6 +217,8 @@ LL1 = Label(GUI, textvariable=show,
 			  	width=20, # width
 			   	height=5) # height
 LL1.place(x=720, y=35)
+
+
 #--------------------------------#
 
 # FRAME ***
@@ -240,8 +272,11 @@ b_FB = Button(F2, text='Facebook', font=('Facebook Letter Faces', 11) ,fg=fg2, b
 b_FB.grid(row=1,column=1, padx=3, )
 #------------------------
  
+#FRAME-0
+MyfFram0(10,10)
+
 # time
-MyfFram(20,20)
+MyfFram1(20,20)
 
 FixedLabel('TIME',NOW_TIME(), 50,50,)
 FixedLabel('DATE TIME', 50,100)
@@ -250,13 +285,15 @@ FixedLabel('PROJECT 4Q-UI',50,400,font=FONT1)
 
 
 # coin
-MyfFram(20,200)
+MyfFram1(20,200)
 FixedLabel('MY COIN', 50,290)
 FixedLabel('BTC COIN', 50,220)
 FixedLabel('TETAIL 109999 btc', 50,250)
 
+
+
 #TEMP
-MyfFram(20,380)
+MyfFram1(20,380)
 
 # CHECK
 MyfFram2(350,20)
@@ -273,7 +310,78 @@ FixedLabel(' F1 or F2 ENTER', 380,260,font=FONT2)
 # FRAME BUTTON
 MyfFram3(700, 20)
 
+# FRAME-4
+MyfFram4(20,515)
+
+# FRAMR-5
+MyfFram5(960,20)
+
+
+E11 = Entry(GUI, textvariable=v_stockname, font=FONT2,bg=bg,fg=fg2)
+E11.configure(insertbackground=fg) # cursor color
+E11.configure(highlightthickness=2,highlightbackground=fg2,highlightcolor=fg2)
+E11.place(x=1030,y=440)
+
+v_result = StringVar()
+v_result.set('MY STOCK: 50,000 BAHT')
+
+LResult = Label(GUI, textvariable=v_result, font=FONT2, bg=bg, fg=fg2, justify=LEFT)
+LResult.place(x=1030,y=500)
+
+E12 = Entry(GUI, textvariable=v_stockname2, font=FONT2,bg=bg,fg=fg2)
+E12.configure(insertbackground=fg) # cursor color
+E12.configure(highlightthickness=2,highlightbackground=fg2,highlightcolor=fg2)
+E12.place(x=1030,y=900)
+
+v_result2 = StringVar()
+v_result2.set('MY STOCK: 50,000 BAHT')
+
+LResult2 = Label(GUI, textvariable=v_result2, font=FONT2, bg=bg, fg=fg2, justify=LEFT)
+LResult2.place(x=1030,y=500)
 
 
 
+def CheckStockPrice(event):
+	playThread()
+	try:
+		stockname = v_stockname.get()
+		print(stockname)
+		result = thaistock(stockname)
+		text = 'STOCK: {}\nPRICE: {}\nCHANGE: {}\n%CHANGE: {}'.format(result[0],result[1],result[2],result[3])
+		v_result.set(text)
+	except:
+		v_result.set('NOT FOUND')
+
+E11.bind('<Return>',CheckStockPrice)
+
+
+
+def CheckStockPrice2(event):
+	playThread()
+	try:
+		stockname2 = v_stockname2.get()
+		print(stockname)
+		result2 = thaistock(stockname)
+		text = 'STOCK: {}\nPRICE: {}\nCHANGE: {}\n%CHANGE: {}'.format(result[0],result[1],result[2],result[3])
+		v_result2.set(text)
+	except:
+		v_result2.set('NOT FOUND')
+
+E12.bind('<Return>',CheckStockPrice)
+
+###-------------- clock  -----------
+
+def clock():
+    string = tm.strftime('%H:%M:%S')
+    lbl.config(text = string)
+    lbl.after(1000, clock)
+ 
+
+lbl = Label(GUI, font = ('impact', 30),
+            background = bg,
+            foreground = 'white')
+
+lbl.place(x=1280,y=800)
+clock()
+#-----------------------------
 GUI.mainloop()
