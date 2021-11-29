@@ -1,5 +1,4 @@
 from tkinter import *
-import datetime
 import time as tm
 import threading
 import pygame
@@ -26,12 +25,12 @@ GUI.geometry('1080x700+300+20')
 GUI.state('zoomed')
 
 bg = '#121212' # back
-bg1 = '#fc0505'
+bg1 = 'orange'
  
 bg3 ='#56d606' # green
 
 fg = '#121212' #121212
-fg1 = '#fc0505'
+fg1 = 'orange'
  
 GUI.configure(background=bg)
 
@@ -53,15 +52,6 @@ v_stockname = StringVar() #StringVar ตัวแปรสำหรับใช�
 v_stockname2 = StringVar() #StringVar ตัวแปรสำหรับใช้กับ GUI
 
 
-# def Fullscreen(event):
-# 	GUI.attributes('-fullscreen',True)
-
-
-# def ExitFullscreen(event):
-# 	GUI.attributes('-fullscreen',False)
-
-# GUI.bind('<F11>',Fullscreen)
-# GUI.bind('<F2>',ExitFullscreen)
 
 GUI.bind('<F10>', lambda event: GUI.attributes('-fullscreen', not GUI.attributes('-fullscreen')))
 
@@ -123,7 +113,7 @@ def NOW_TIME():
 CLOCK_DISTPLAY = Label(GUI, fg=fg, font=("Arial", 35, 'bold'),bg=bg1)
 CLOCK_DISTPLAY.place(x=50, y=40)
 
-DATE_DISTPLAY = Label(GUI, fg=fg, font=("Arial", 18, 'bold'),bg='gray')
+DATE_DISTPLAY = Label(GUI, fg=fg, font=("Arial", 18, 'bold'),bg=fg1)
 DATE_DISTPLAY.place(x=202, y=47)
 
 
@@ -321,15 +311,28 @@ BTF(450, 350, 'F2')
 BTF(500, 350, 'ENTER','orange')
 
 #-------- BitMaps ---------
+
+# POTO
+
+
 def BITMAPS(x,y,bitmap,fg='red',cursor='dot'):
-	BM = Button(GUI, relief=RAISED, bitmap=bitmap,fg=fg, cursor=cursor)
+	BM = Button(GUI,relief=RAISED, bitmap=bitmap,fg=fg, cursor=cursor)
 	BM.place(x=x,y=y)
+
+def PHOTO(x,y):
+	photo = PhotoImage(file="doughnut.png")
+	Button(GUI, image=photo).place(x=x,y=y)
+
+PHOTO(30,600)
+
 
 BITMAPS(400,400,'error','green')
 BITMAPS(450,400,'error','black')
 BITMAPS(500,400,'error')
 BITMAPS(550,400,'warning')
 BITMAPS(600,400,'stop','red','pirate')
+
+ 
 
 
 
