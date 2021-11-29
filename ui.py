@@ -1,5 +1,5 @@
 from tkinter import *
-import time as tm
+import time
 import threading
 import pygame
 from uncleengineer import thaistock
@@ -101,11 +101,11 @@ def ENTRY(x=50,y=50,font=FONT1):
 
 def NOW_TIME():
 
-	now = tm.strftime("%H:%M:%S")  # เวลาปัจจุบัน
+	now = time.strftime("%H:%M:%S")  # เวลาปัจจุบัน
 	CLOCK_DISTPLAY["text"] = now
 	print('เวลา:', now)
 
-	date = tm.strftime("%d/%m/%Y") 
+	date = time.strftime("%d/%m/%Y") 
 	print("วันที่:",date)
 	DATE_DISTPLAY["text"] = date
 	GUI.after(1000, NOW_TIME)     # กำหนดให้ฟังก์ชั่นทำงานซ้ำ 1 วิ
@@ -320,7 +320,7 @@ def BITMAPS(x,y,bitmap,fg='red',cursor='dot'):
 	BM.place(x=x,y=y)
 
 def PHOTO(x,y):
-	photo = PhotoImage(file="doughnut.png")
+	photo = PhotoImage(file="coffee.png")
 	Button(GUI, image=photo).place(x=x,y=y)
 
 PHOTO(30,600)
@@ -408,7 +408,7 @@ E12.bind('<Return>',CheckStockPrice2)
 ###-------------- clock  -----------
 
 def clock():
-    string = tm.strftime('%H:%M:%S')
+    string = time.strftime('%H:%M:%S')
     lbl.config(text = string)
     lbl.after(1000, clock)
  
