@@ -125,8 +125,8 @@ def ON():
 	print('POWER ON')
 
 def Mute():
-	show.set('MUTE')
-	print('MUTE')
+	show.set('POWER OFF')
+	print('POWER OFF')
 
 #---*** function source ***--
 def YT():
@@ -226,7 +226,7 @@ F1.place(x=732, y=250)
 
 
 
-#*********************
+#********* command Button ************
 POWER = Button(GUI, text='ON',fg='red', bg=bg3, command=ON)
 POWER.place(x=740,y=435)
 
